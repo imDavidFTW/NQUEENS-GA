@@ -15,6 +15,8 @@ public class Population {
         reShuffle();
     }
 
+    // for the initial population I want to start with a unique 
+    //population, so I shuffle till the values are unique
     public void reShuffle(){
         boolean check = false;
         for(int i = 0; i < population.size(); i++){
