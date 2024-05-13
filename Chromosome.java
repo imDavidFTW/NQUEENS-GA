@@ -23,6 +23,10 @@ public class Chromosome{
         return fitness;
     }
 
+    public void setFitness(int fitness){
+        this.fitness = fitness;
+    }
+
     public ArrayList<Integer> getC(){
         return c;
     }
@@ -40,7 +44,7 @@ public class Chromosome{
         calculateFitness();
     }
 
-    public void calculateFitness(){
+    public int calculateFitness(){
         // fitness = n(n-1)/2 maximum intersections of queens - intersecting
         //1302
         //row 0 col 1 , row 1 col 3, ...
@@ -54,6 +58,7 @@ public class Chromosome{
             }
         }
         fitness -= intersecting;
+        return fitness;
     }
 
     public boolean intersects(int x1, int y1, int x2, int y2){
