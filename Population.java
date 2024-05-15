@@ -46,7 +46,7 @@ public class Population {
 
     // mating pool being found by using deterministic algorithm
     // keeps population size the same and shuffles the result
-    public ArrayList<Chromosome> findMatingPool(){
+    public ArrayList<Chromosome> deterministicMatingPool(){
         // first calculate expexcted values
         int n = population.size();
         int i = 0;
@@ -67,6 +67,29 @@ public class Population {
             i+=1;
         }
         Collections.shuffle(mp);
+        return mp;
+    }
+
+    public ArrayList<Chromosome> tournamentMatingPool(double tournamentSize){
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        for(int i = 0; i < population.size(); i++){
+            indexes.add(i);
+        }
+        Collections.shuffle(indexes);
+        ArrayList<Chromosome> mp = new ArrayList<>();
+        while(mp.size() < population.size()){
+            Chromosome c = null;
+            int maximum = 0;
+            for(int i = 0; i < (int)(population.size() * tournamentSize); i++){
+                Chromosome temp = population.get(indexes.get(i));
+                int fitnessTemp = temp.getFitness();
+                if(fitnessTemp > maximum){
+                    maximum = fitnessTemp;
+                    c = temp;
+                }
+            }
+            mp.add(c);
+        }
         return mp;
     }
 
@@ -153,10 +176,7 @@ public class Population {
             int temp = arr.get(point1);
             arr.set(point1, arr.get(point2));
             arr.set(point2, temp);
-            System.out.println(c.getFitness());
             c.setFitness(c.calculateFitness());
-            System.out.println(c.getFitness());
-            // System.out.println("Mutated at points: " + point1 + "," + point2);
         }
     }
 
